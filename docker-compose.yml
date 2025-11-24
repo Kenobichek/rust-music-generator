@@ -1,0 +1,12 @@
+version: "3.9"
+
+services:
+  rust-dev:
+    build: .
+    container_name: rust_app
+    volumes:
+      - .:/app
+      - /app/target
+    stdin_open: true
+    tty: true
+    working_dir: /app
