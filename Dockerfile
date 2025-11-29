@@ -1,4 +1,3 @@
-# Используем официальный Rust образ
 FROM rust:1.91-slim
 
 WORKDIR /app
