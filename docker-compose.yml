@@ -1,12 +1,27 @@
 version: "3.9"
 
 services:
-  rust-dev:
-    build: .
-    container_name: rust_app
+  rust:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: rust_wasm
     volumes:
-      - .:/app
-      - /app/target
-    stdin_open: true
-    tty: true
+      - web-pkg:/app/web/pkg
     working_dir: /app
+    tty: true
+
+  web:
+    image: python:3.11-slim
+    container_name: web
+    volumes:
+       - ./web:/app/web
+       - web-pkg:/app/web/pkg
+    working_dir: /app/web
+    ports:
+      - "8080:8080"
+    command: python3 -m http.server 8080
+    tty: true
+
+volumes:
+  web-pkg:
